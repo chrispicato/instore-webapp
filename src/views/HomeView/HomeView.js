@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { actions as counterActions } from '../../redux/modules/counter';
+import counterActions from '../../actions/counterActions';
 import DuckImage from './Duck.jpg';
 import classes from './HomeView.scss';
 
@@ -10,17 +10,24 @@ import classes from './HomeView.scss';
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-const mapStateToProps = (state) => ({
-  counter: state.counter
-});
+const mapStateToProps = function (state) {
+  return {
+    counter: state.counter
+  };
+};
+
 export class HomeView extends React.Component {
   static propTypes = {
-    counter: PropTypes.number.isRequired,
-    doubleAsync: PropTypes.func.isRequired,
-    increment: PropTypes.func.isRequired
+    counter: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired
   };
 
   render () {
+    const {
+      counter,
+      dispatch
+    } = this.props;
+
     return (
       <div className='container text-center'>
         <div className='row'>
@@ -34,15 +41,15 @@ export class HomeView extends React.Component {
         <h2>
           Sample Counter:
           {' '}
-          <span className={classes['counter--green']}>{this.props.counter}</span>
+          <span className={classes['counter--green']}>{counter.number}</span>
         </h2>
         <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
+                onClick={() => dispatch(counterActions.increment(1))}>
           Increment
         </button>
         {' '}
         <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
+                onClick={() => dispatch(counterActions.doubleAsync())}>
           Double (Async)
         </button>
         <hr />
@@ -52,4 +59,4 @@ export class HomeView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(HomeView);
+export default connect(mapStateToProps)(HomeView);

@@ -4,7 +4,7 @@ import { useRouterHistory } from 'react-router';
 import { createHistory } from 'history';
 import makeRoutes from './routes';
 import Root from './containers/Root';
-import configureStore from './redux/configureStore';
+import configureStore from './store/configureStore';
 
 const historyConfig = { basename: __BASENAME__ };
 const history = useRouterHistory(createHistory)(historyConfig);
