@@ -3,7 +3,7 @@ import counterConstants from '../constants/counterConstants';
 // ------------------------------------
 // Actions
 // ------------------------------------
-const increment = function (value) {
+const increment = function (value = 1) {
   return {
     type: counterConstants.COUNTER_INCREMENT,
     payload: value

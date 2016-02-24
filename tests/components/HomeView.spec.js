@@ -1,7 +1,7 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import { bindActionCreators } from 'redux';
-import { HomeView } from 'views/HomeView/HomeView';
+import { HomeView } from 'components/HomeView/HomeView';
 import { mount } from 'enzyme';
 
 function shallowRender (component) {
@@ -19,17 +19,16 @@ function shallowRenderWithProps (props = {}) {
   return shallowRender(<HomeView {...props} />);
 }
 
-describe('(View) Home', function () {
+describe('(Component) Home', function () {
   let _component, _rendered, _props, _spies;
 
   beforeEach(function () {
     _spies = {};
     _props = {
-      counter: 0,
-      ...bindActionCreators({
-        doubleAsync: (_spies.doubleAsync = sinon.spy()),
-        increment: (_spies.increment = sinon.spy())
-      }, _spies.dispatch = sinon.spy())
+      counter: {
+        number: 0
+      },
+      dispatch: _spies.dispatch = sinon.spy()
     };
 
     _component = shallowRenderWithProps(_props);
@@ -56,7 +55,12 @@ describe('(View) Home', function () {
 
   it('Should render props.counter at the end of the sample counter <h2>.', function () {
     const h2 = TestUtils.findRenderedDOMComponentWithTag(
-      renderWithProps({ ..._props, counter: 5 }), 'h2'
+      renderWithProps({
+        ..._props, 
+        counter: {
+          number: 5 
+        }
+      }), 'h2'
     );
 
     expect(h2).to.exist;
@@ -64,8 +68,7 @@ describe('(View) Home', function () {
   });
 
   it('Should render exactly two buttons.', function () {
-    const wrapper = mount(<HomeView />);
-
+    const wrapper = mount(<HomeView {..._props}/>);
     expect(wrapper).to.have.descendants('.btn');
   });
 
