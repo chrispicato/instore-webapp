@@ -3,7 +3,7 @@ import { syncHistory } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/rootReducer';
 
-export default function configureStore ({ initialState = {}, history }) {
+export default function configureStore({ initialState = {}, history }) {
   // Sync with router via history instance (main.js)
   const routerMiddleware = syncHistory(history);
 

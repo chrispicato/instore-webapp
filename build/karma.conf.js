@@ -14,13 +14,13 @@ const karmaConfig = {
       pattern: `./${config.dir_test}/test-bundler.js`,
       watched: false,
       served: true,
-      included: true
-    }
+      included: true,
+    },
   ],
   singleRun: !argv.watch,
   frameworks: ['mocha'],
   preprocessors: {
-    [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap']
+    [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap'],
   },
   reporters: ['spec'],
   browsers: ['PhantomJS'],
@@ -30,20 +30,20 @@ const karmaConfig = {
       ...webpackConfig.resolve,
       alias: {
         ...webpackConfig.resolve.alias,
-        sinon: 'sinon/pkg/sinon.js'
-      }
+        sinon: 'sinon/pkg/sinon.js',
+      },
     },
     plugins: webpackConfig.plugins,
     module: {
       noParse: [
-        /\/sinon\.js/
+        /\/sinon\.js/,
       ],
       loaders: webpackConfig.module.loaders.concat([
         {
           test: /sinon(\\|\/)pkg(\\|\/)sinon\.js/,
-          loader: 'imports?define=>false,require=>false'
-        }
-      ])
+          loader: 'imports?define=>false,require=>false',
+        },
+      ]),
     },
     externals: {
       ...webpackConfig.externals,
@@ -51,16 +51,16 @@ const karmaConfig = {
       cheerio: 'window',
       'react/lib/ExecutionEnvironment': true,
       'react/lib/ReactContext': 'window',
-      'text-encoding': 'window'
+      'text-encoding': 'window',
     },
-    sassLoader: webpackConfig.sassLoader
+    sassLoader: webpackConfig.sassLoader,
   },
   webpackMiddleware: {
-    noInfo: true
+    noInfo: true,
   },
   coverageReporter: {
-    reporters: config.coverage_reporters
-  }
+    reporters: config.coverage_reporters,
+  },
 };
 
 if (config.coverage_enabled) {
@@ -69,7 +69,7 @@ if (config.coverage_enabled) {
     test: /\.(js|jsx)$/,
     include: new RegExp(config.dir_client),
     loader: 'isparta',
-    exclude: /node_modules/
+    exclude: /node_modules/,
   }];
 }
 
