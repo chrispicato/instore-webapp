@@ -3,3 +3,8 @@ node_modules/**
 dist/**
 *.spec.js
 src/index.html
+
+bin/**
+build/**
+config/**
+server/**
