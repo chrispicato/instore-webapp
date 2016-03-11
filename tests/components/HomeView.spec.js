@@ -1,65 +1,67 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import { bindActionCreators } from 'redux';
 import { HomeView } from 'components/HomeView/HomeView';
 import { mount } from 'enzyme';
 
-function shallowRender (component) {
+function shallowRender(component) {
   const renderer = TestUtils.createRenderer();
 
   renderer.render(component);
   return renderer.getRenderOutput();
 }
 
-function renderWithProps (props = {}) {
+function renderWithProps(props = {}) {
   return TestUtils.renderIntoDocument(<HomeView {...props} />);
 }
 
-function shallowRenderWithProps (props = {}) {
+function shallowRenderWithProps(props = {}) {
   return shallowRender(<HomeView {...props} />);
 }
 
-describe('(Component) Home', function () {
-  let _component, _rendered, _props, _spies;
+describe('(Component) Home', () => {
+  let _component;
+  let _rendered;
+  let _props;
+  let _spies;
 
-  beforeEach(function () {
+  beforeEach(() => {
     _spies = {};
     _props = {
       counter: {
-        number: 0
+        number: 0,
       },
-      dispatch: _spies.dispatch = sinon.spy()
+      dispatch: _spies.dispatch = sinon.spy(),
     };
 
     _component = shallowRenderWithProps(_props);
     _rendered = renderWithProps(_props);
   });
 
-  it('Should render as a <div>.', function () {
+  it('Should render as a <div>.', () => {
     expect(_component.type).to.equal('div');
   });
 
-  it('Should include an <h1> with welcome text.', function () {
+  it('Should include an <h1> with welcome text.', () => {
     const h1 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h1');
 
     expect(h1).to.exist;
     expect(h1.textContent).to.match(/Welcome to the React Redux Starter Kit/);
   });
 
-  it('Should render with an <h2> that includes Sample Counter text.', function () {
+  it('Should render with an <h2> that includes Sample Counter text.', () => {
     const h2 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h2');
 
     expect(h2).to.exist;
     expect(h2.textContent).to.match(/Sample Counter/);
   });
 
-  it('Should render props.counter at the end of the sample counter <h2>.', function () {
+  it('Should render props.counter at the end of the sample counter <h2>.', () => {
     const h2 = TestUtils.findRenderedDOMComponentWithTag(
       renderWithProps({
-        ..._props, 
+        ..._props,
         counter: {
-          number: 5 
-        }
+          number: 5,
+        },
       }), 'h2'
     );
 
@@ -67,12 +69,12 @@ describe('(Component) Home', function () {
     expect(h2.textContent).to.match(/5$/);
   });
 
-  it('Should render exactly two buttons.', function () {
+  it('Should render exactly two buttons.', () => {
     const wrapper = mount(<HomeView {..._props}/>);
     expect(wrapper).to.have.descendants('.btn');
   });
 
-  describe('An increment button...', function () {
+  describe('An increment button...', () => {
     let _btn;
 
     beforeEach(() => {
@@ -80,18 +82,18 @@ describe('(Component) Home', function () {
         .filter(a => /Increment/.test(a.textContent))[0];
     });
 
-    it('should be rendered.', function () {
+    it('should be rendered.', () => {
       expect(_btn).to.exist;
     });
 
-    it('should dispatch an action when clicked.', function () {
+    it('should dispatch an action when clicked.', () => {
       _spies.dispatch.should.have.not.been.called;
       TestUtils.Simulate.click(_btn);
       _spies.dispatch.should.have.been.called;
     });
   });
 
-  describe('A Double (Async) button...', function () {
+  describe('A Double (Async) button...', () => {
     let _btn;
 
     beforeEach(() => {
@@ -99,11 +101,11 @@ describe('(Component) Home', function () {
         .filter(a => /Double/.test(a.textContent))[0];
     });
 
-    it('should be rendered.', function () {
+    it('should be rendered.', () => {
       expect(_btn).to.exist;
     });
 
-    it('should dispatch an action when clicked.', function () {
+    it('should dispatch an action when clicked.', () => {
       _spies.dispatch.should.have.not.been.called;
       TestUtils.Simulate.click(_btn);
       _spies.dispatch.should.have.been.called;

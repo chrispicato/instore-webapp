@@ -4,5 +4,5 @@ import counterReducer from './counterReducer';
 
 export default combineReducers({
   counter: counterReducer,
-  routing: routeReducer
+  routing: routeReducer,
 });

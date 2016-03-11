@@ -12,6 +12,7 @@ const history = useRouterHistory(createHistory)(historyConfig);
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore({ initialState, history });
 
+// const routes = makeRoutes(store);
 const routes = makeRoutes(store);
 
 // Render the React application to the DOM

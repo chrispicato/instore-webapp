@@ -7,7 +7,11 @@ import _debug from 'debug';
 
 const debug = _debug('app:webpack:config');
 const paths = config.utils_paths;
-const {__DEV__, __PROD__, __TEST__} = config.globals;
+const {
+  __DEV__,
+  __PROD__,
+  __TEST__,
+} = config.globals;
 
 debug('Create configuration.');
 const webpackConfig = {
@@ -16,20 +20,23 @@ const webpackConfig = {
   devtool: config.compiler_devtool,
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
-  module: {}
+  module: {},
 };
 // ------------------------------------
 // Entry Points
 // ------------------------------------
-const APP_ENTRY_PATH = paths.base(config.dir_client) + '/main.js';
+const APP_ENTRY_PATH = `${paths.base(config.dir_client)}/main.js`;
 
 webpackConfig.entry = {
-  app: __DEV__
-    ? [APP_ENTRY_PATH, `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`]
-    : [APP_ENTRY_PATH],
-  vendor: config.compiler_vendor
+  app: __DEV__ ? [
+    APP_ENTRY_PATH,
+    `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`,
+  ] : [
+    APP_ENTRY_PATH,
+  ],
+  vendor: config.compiler_vendor,
 };
 
 // ------------------------------------
@@ -38,7 +45,7 @@ webpackConfig.entry = {
 webpackConfig.output = {
   filename: `[name].[${config.compiler_hash_type}].js`,
   path: paths.base(config.dir_dist),
-  publicPath: config.compiler_public_path
+  publicPath: config.compiler_public_path,
 };
 
 // ------------------------------------
@@ -53,16 +60,16 @@ webpackConfig.plugins = [
     filename: 'index.html',
     inject: 'body',
     minify: {
-      collapseWhitespace: true
-    }
-  })
+      collapseWhitespace: true,
+    },
+  }),
 ];
 
 if (__DEV__) {
   debug('Enable plugins for live development (HMR, NoErrors).');
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
   );
 } else if (__PROD__) {
   debug('Enable plugins for production (OccurenceOrder, Dedupe & UglifyJS).');
@@ -73,16 +80,16 @@ if (__DEV__) {
       compress: {
         unused: true,
         dead_code: true,
-        warnings: false
-      }
-    })
+        warnings: false,
+      },
+    }),
   );
 }
 
 // Don't split bundles during testing, since we only want import one bundle
 if (!__TEST__) {
   webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor']
+    names: ['vendor'],
   }));
 }
 
@@ -92,12 +99,12 @@ if (!__TEST__) {
 webpackConfig.module.preLoaders = [{
   test: /\.(js|jsx)$/,
   loader: 'eslint',
-  exclude: /node_modules/
+  exclude: /node_modules/,
 }];
 
 webpackConfig.eslint = {
   configFile: paths.base('.eslintrc'),
-  emitWarning: __DEV__
+  emitWarning: __DEV__,
 };
 
 // ------------------------------------
@@ -113,12 +120,12 @@ webpackConfig.module.loaders = [{
     plugins: ['transform-runtime'],
     presets: __DEV__
       ? ['es2015', 'react', 'stage-0', 'react-hmre']
-      : ['es2015', 'react', 'stage-0']
-  }
+      : ['es2015', 'react', 'stage-0'],
+  },
 },
 {
   test: /\.json$/,
-  loader: 'json'
+  loader: 'json',
 }];
 
 // Styles
@@ -128,7 +135,7 @@ const cssLoader = !config.compiler_css_modules
     'css?modules',
     'sourceMap',
     'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
+    'localIdentName=[name]__[local]___[hash:base64:5]',
   ].join('&');
 
 webpackConfig.module.loaders.push({
@@ -138,8 +145,8 @@ webpackConfig.module.loaders.push({
     'style',
     cssLoader,
     'postcss',
-    'sass?sourceMap'
-  ]
+    'sass?sourceMap',
+  ],
 });
 
 webpackConfig.module.loaders.push({
@@ -148,8 +155,8 @@ webpackConfig.module.loaders.push({
   loaders: [
     'style',
     cssLoader,
-    'postcss'
-  ]
+    'postcss',
+  ],
 });
 
 // Don't treat global SCSS as modules
@@ -160,8 +167,8 @@ webpackConfig.module.loaders.push({
     'style',
     'css?sourceMap',
     'postcss',
-    'sass?sourceMap'
-  ]
+    'sass?sourceMap',
+  ],
 });
 
 // Don't treat global, third-party CSS as modules
@@ -171,12 +178,12 @@ webpackConfig.module.loaders.push({
   loaders: [
     'style',
     'css?sourceMap',
-    'postcss'
-  ]
+    'postcss',
+  ],
 });
 
 webpackConfig.sassLoader = {
-  includePaths: paths.client('styles')
+  includePaths: paths.client('styles'),
 };
 
 webpackConfig.postcss = [
@@ -184,14 +191,14 @@ webpackConfig.postcss = [
     autoprefixer: {
       add: true,
       remove: true,
-      browsers: ['last 2 versions']
+      browsers: ['last 2 versions'],
     },
     discardComments: {
-      removeAll: true
+      removeAll: true,
     },
     safe: true,
-    sourcemap: true
-  })
+    sourcemap: true,
+  }),
 ];
 
 // File loaders
@@ -203,7 +210,7 @@ webpackConfig.module.loaders.push(
   { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
-  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' },
 )
 /* eslint-enable */
 
@@ -225,7 +232,7 @@ if (!__DEV__) {
 
   webpackConfig.plugins.push(
     new ExtractTextPlugin('[name].[contenthash].css', {
-      allChunks: true
+      allChunks: true,
     })
   );
 }

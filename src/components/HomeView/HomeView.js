@@ -10,31 +10,54 @@ import classes from './HomeView.scss';
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-const mapStateToProps = function (state) {
+function mapStateToProps(state) {
   return {
-    counter: state.counter
+    counter: state.counter,
   };
-};
+}
 
 export class HomeView extends React.Component {
   static propTypes = {
     counter: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   };
 
-  render () {
+  constructor(props) {
+    super(props);
+
+    this.onClickIncrement = this.onClickIncrement.bind(this);
+    this.onClickDoubleAsync = this.onClickDoubleAsync.bind(this);
+  }
+
+  onClickIncrement() {
+    const {
+      dispatch,
+    } = this.props;
+
+    dispatch(counterActions.increment(1));
+  }
+
+  onClickDoubleAsync() {
+    const {
+      dispatch,
+    } = this.props;
+
+    dispatch(counterActions.doubleAsync());
+  }
+
+  render() {
     const {
       counter,
-      dispatch
     } = this.props;
 
     return (
-      <div className='container text-center'>
-        <div className='row'>
-          <div className='col-xs-2 col-xs-offset-5'>
+      <div className="container text-center">
+        <div className="row">
+          <div className="col-xs-2 col-xs-offset-5">
             <img className={classes.duck}
-                 src={DuckImage}
-                 alt='This is a duck, because Redux.' />
+              src={DuckImage}
+              alt="This is a duck, because Redux."
+            />
           </div>
         </div>
         <h1>Welcome to the React Redux Starter Kit</h1>
@@ -43,17 +66,19 @@ export class HomeView extends React.Component {
           {' '}
           <span className={classes['counter--green']}>{counter.number}</span>
         </h2>
-        <button className='btn btn-default'
-                onClick={() => dispatch(counterActions.increment(1))}>
+        <button className="btn btn-default"
+          onClick={this.onClickIncrement}
+        >
           Increment
         </button>
         {' '}
-        <button className='btn btn-default'
-                onClick={() => dispatch(counterActions.doubleAsync())}>
+        <button className="btn btn-default"
+          onClick={this.onClickDoubleAsync}
+        >
           Double (Async)
         </button>
         <hr />
-        <Link to='/404'>Go to 404 Page</Link>
+        <Link to="/404">Go to 404 Page</Link>
       </div>
     );
   }

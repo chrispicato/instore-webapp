@@ -4,9 +4,9 @@ import webpack from 'webpack';
 import webpackConfig from '../build/webpack.config';
 import historyApiFallback from 'koa-connect-history-api-fallback';
 import serve from 'koa-static';
+import koaProxyMiddleware from 'koa-proxy';
 import _debug from 'debug';
 import config from '../config';
-import webpackProxyMiddleware from './middleware/webpack-proxy';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHMRMiddleware from './middleware/webpack-hmr';
 
@@ -18,7 +18,7 @@ const app = new Koa();
 // (ignoring file requests). If you want to implement isomorphic
 // rendering, you'll want to remove this middleware.
 app.use(convert(historyApiFallback({
-  verbose: false
+  verbose: false,
 })));
 
 // ------------------------------------
@@ -32,7 +32,7 @@ if (config.env === 'development') {
 
   if (config.proxy && config.proxy.enabled) {
     const options = config.proxy.options;
-    app.use(convert(webpackProxyMiddleware(options)));
+    app.use(convert(koaProxyMiddleware(options)));
   }
 
   app.use(webpackDevMiddleware(compiler, publicPath));

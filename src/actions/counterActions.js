@@ -17,14 +17,12 @@ function increment(value = 1) {
 // you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
 // reducer take care of this logic.
 function doubleAsync() {
-  return function (dispatch, getState) {
-    return new Promise(function (resolve) {
-      setTimeout(() => {
-        dispatch(increment(getState().counter.number));
-        resolve();
-      }, 200);
-    });
-  };
+  return (dispatch, getState) => new Promise((resolve) => {
+    setTimeout(() => {
+      dispatch(increment(getState().counter.number));
+      resolve();
+    }, 200);
+  });
 }
 
 const actions = {

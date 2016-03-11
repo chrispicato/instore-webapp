@@ -10,10 +10,11 @@ import CoreLayout from 'layouts/CoreLayout/CoreLayout';
 import HomeView from 'components/HomeView/HomeView';
 import NotFoundView from 'components/NotFoundView/NotFoundView';
 
-export default (store) => (
-  <Route path='/' component={CoreLayout}>
+// export default (store) => (
+export default () => (
+  <Route path="/" component={CoreLayout}>
     <IndexRoute component={HomeView} />
-    <Route path='/404' component={NotFoundView} />
-    <Redirect from='*' to='/404' />
+    <Route path="/404" component={NotFoundView} />
+    <Redirect from="*" to="/404" />
   </Route>
 );
