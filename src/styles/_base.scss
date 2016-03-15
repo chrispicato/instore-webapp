@@ -11,6 +11,7 @@ For example:
 @import './themes/default'
 */
 
-@import '/components/home-view'
+@import 'components/all';
+@import 'vendors/all';
 
 // @import './themes/default'

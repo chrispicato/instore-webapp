@@ -1,7 +1,7 @@
 TODO.md
 
-Upgrade to airbnb lint
+Create instore site from old instore page
 
-Add in missing images and fonts to statics
+Define redux actions nd etc
 
-Add in petra theme
+Connect with server to get some fake data?
