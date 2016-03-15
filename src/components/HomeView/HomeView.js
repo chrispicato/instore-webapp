@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import counterActions from '../../actions/counterActions';
 import DuckImage from './Duck.jpg';
-import classes from './HomeView.scss';
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -54,7 +53,7 @@ export class HomeView extends React.Component {
       <div className="container text-center">
         <div className="row">
           <div className="col-xs-2 col-xs-offset-5">
-            <img className={classes.duck}
+            <img className="duck"
               src={DuckImage}
               alt="This is a duck, because Redux."
             />
@@ -64,7 +63,7 @@ export class HomeView extends React.Component {
         <h2>
           Sample Counter:
           {' '}
-          <span className={classes['counter--green']}>{counter.number}</span>
+          <span className="counter counter-green">{counter.number}</span>
         </h2>
         <button className="btn btn-default"
           onClick={this.onClickIncrement}
