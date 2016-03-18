@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import 'bootstrap-loader'
 import '../../styles/core.scss';
 
 // Note: Stateless/function components *will not* hot reload!

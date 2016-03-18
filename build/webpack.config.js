@@ -126,7 +126,11 @@ webpackConfig.module.loaders = [{
 {
   test: /\.json$/,
   loader: 'json',
-}];
+},
+{
+  test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+  loader: 'imports?jQuery=jquery'
+},];
 
 // Styles
 const cssLoader = !config.compiler_css_modules
