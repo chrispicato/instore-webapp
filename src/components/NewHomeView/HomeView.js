@@ -145,35 +145,35 @@ export class HomeView extends React.Component {
             <div className="navbar-header navbar-logo">
               <Link to="home" className="navbar-brand navbar-abc"> InStore </Link>
             </div>
-            <ul className="nav navbar-nav pull-right navbar-menu" style={styles.navBarMenu}>
+            <ul className="nav navbar-nav pull-right navbar-menu">
               <li><Link to="home" className="navbar-brand navbar-abc"> Connect Your Inventory </Link></li>
               {
               /*
-              <li><Link to="home" className="navbar-brand" style={styles.navBarLink}> Help </Link></li>
-              <li><Link to="home" className="navbar-brand" style={styles.navBarLink}> Sign Up </Link></li>
-              <li><Link to="home" className="navbar-brand" style={styles.navBarLink}> Sign In </Link></li>
+              <li><Link to="home" className="navbar-brand"> Help </Link></li>
+              <li><Link to="home" className="navbar-brand"> Sign Up </Link></li>
+              <li><Link to="home" className="navbar-brand"> Sign In </Link></li>
               */
               }
             </ul>
           </div>
         </nav>
-        <div className="jumbotron" style={styles.hero}>
-          <div className="container" style={styles.heroCaption}>
+        <div className="jumbotron hero">
+          <div className="container hero-caption">
             <h1>Welcome!</h1>
             <p>Search local OC vape shops for products you need now</p>
           </div>
-          <div className="container" style={styles.searchContainer}>
+          <div className="container search-container">
             <form>
-              <div className="form-group form-group-lg col-md-6" style={styles.searchInputContainer}>
+              <div className="form-group form-group-lg col-md-6 input-container">
                 <label className="control-label" htmlFor="search-input">Search</label>
                 <input id="search-input" className="form-control" ref="searchInput" type="text"  placeholder="What are you looking for?" onChange={this.onChangeSearchInput} onKeyDown={this.onKeyDownSearchInput}></input>
               </div>
-              <div className="form-group form-group-lg col-md-4" style={styles.locationInputContainer}>
+              <div className="form-group form-group-lg col-md-4 input-container">
                 <label className="control-label" htmlFor="location-input">Location</label>
                 <input id="location-input" className="form-control" ref="locationInput" type="text" placeholder="Enter location" onChange={this.onChangeLocationInput} onBlur={this.onChangeLocationInput} onKeyDown={this.onKeyDownSearchInput}></input>
               </div>
-              <div className="form-group form-group-lg col-md-2" style={styles.searchButtonContainer}>
-                <input className="btn-block btn btn-lg btn-primary" type="button" value="Search" onClick={this.onClickSearchButton} style={styles.searchButton}></input>
+              <div className="form-group form-group-lg col-md-2 search-button-container">
+                <input className="btn-block btn btn-lg btn-primary search-button" type="button" value="Search" onClick={this.onClickSearchButton}></input>
               </div>
             </form>
           </div>
@@ -207,73 +207,5 @@ export class HomeView extends React.Component {
     );
   }
 }
-
-const styles = {
-  content: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  navBar: {
-    marginBottom: -60,
-    backgroundColor: 'rgba(0, 0, 0, 0.0)',
-    borderBottom: 0,
-    height: 60,
-  },
-  navBarContentContainer: {
-    marginLeft: 0,
-    marginRight: 0,
-    width: '100%',
-    height: '100%'
-  },
-  navBarLogo: {
-    paddingTop: 5
-  },
-  navBarMenu: {
-    paddingTop: 5
-  },
-  navBarLink: {
-    color: 'white'
-  },
-  hero: {
-    backgroundImage: 'url(\'http://jinqiaojs.com/hd/pretty-beach-hd-wallpaper-0zd.jpg\')',
-    backgroundSize: 'cover',
-    height: 600,
-    paddingLeft: 0,
-    paddingRight: 0,
-    borderRadius: 0,
-    paddingBottom: 0,
-    paddingTop: '10%',
-    position: 'relative'
-  },
-  heroCaption: {
-    textAlign: 'center',
-    color: 'white'
-  },
-  searchContainer: {
-    background: 'rgba(15,81,133,0.3)',
-    marginLeft: 0,
-    marginRight: 0,
-    width: '100%',
-    paddingLeft: 150,
-    paddingRight: 150,
-    height: 150,
-    paddingTop: 27,
-    position: 'absolute',
-    bottom: 0
-  },
-  searchInputContainer: {
-    color: 'white',
-    fontSize: 16
-  },
-  locationInputContainer: {
-    color: 'white',
-    fontSize: 16
-  },
-  searchButtonContainer: {
-    marginTop: 26
-  },
-  searhcButton: {
-  }
-};
 
 export default connect(mapStateToProps)(HomeView);
