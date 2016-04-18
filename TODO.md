@@ -1,10 +1,18 @@
 TODO.md
 
-Create instore home view from old instore home view
-  convert the changes to state to reducers
-  convert the inline styles over
-  fix the css
-  fix map
+* HomeView
+  - Make navbar buttons white
+  - Convert the inline styles over
+  - Fix the css
+      - Optimize the css
+      - Fix positioning of image
+  - Split HomeView into different components
+    - Navbar
+    - Header refer to themes for help
+    - Overview
+    - Values (3 columns about what we provide?)
+
+* ProductSearchResultView [4/29]
 
 Define redux actions nd etc
 

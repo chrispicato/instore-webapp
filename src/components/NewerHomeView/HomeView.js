@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import searchActions from '../../actions/searchActions';
-import NavBar from './NavBar';
-import Overview from './Overview';
+import Header from './Header';
+import Hero from './Hero';
+import About from './About';
+import Footer from './Footer';
 // import BackgroundImage from './'
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -141,30 +143,11 @@ export class HomeView extends React.Component {
     } = this.props;
 
     return (
-      <div className="container-fluid content">
-        <NavBar />
-        <div className="jumbotron hero">
-          <div className="container hero-caption">
-            <h1>Welcome!</h1>
-            <p>Search local OC vape shops for products you need now</p>
-          </div>
-          <div className="container search-container">
-            <form>
-              <div className="form-group form-group-lg col-md-6 input-container">
-                <label className="control-label" htmlFor="search-input">Search</label>
-                <input id="search-input" className="form-control" ref="searchInput" type="text" placeholder="What are you looking for?" onChange={this.onChangeSearchInput} onKeyDown={this.onKeyDownSearchInput}></input>
-              </div>
-              <div className="form-group form-group-lg col-md-4 input-container">
-                <label className="control-label" htmlFor="location-input">Location</label>
-                <input id="location-input" className="form-control" ref="locationInput" type="text" placeholder="Enter location" onChange={this.onChangeLocationInput} onBlur={this.onChangeLocationInput} onKeyDown={this.onKeyDownSearchInput}></input>
-              </div>
-              <div className="form-group form-group-lg col-md-2 search-button-container">
-                <input className="btn-block btn btn-lg btn-primary search-button" type="button" value="Search" onClick={this.onClickSearchButton}></input>
-              </div>
-            </form>
-          </div>
-        </div>
-        <Overview />
+      <div className="home-view">
+        <Header />
+        <Hero />
+        <About />
+        <Footer />
       </div>
     );
   }
