@@ -17,9 +17,7 @@ export class Header extends React.Component {
     return (
       <div className="home-header">
         <div className="header-item pull-left">
-          <div className="company-name-button">
-            InStore
-          </div>
+          <a className="icon-button" href="/">InStore</a>
         </div>
         <div className="header-item pull-right">
           <div className="log-in-button">

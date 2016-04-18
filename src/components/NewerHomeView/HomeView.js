@@ -28,40 +28,62 @@ export class HomeView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      locationAutocompleteHidden: true,
-    };
-
+    // To detect change in search input
     this.onChangeSearchInput = this.onChangeSearchInput.bind(this);
-    this.onKeyDownSearchInput = this.onKeyDownSearchInput.bind(this);
-    this.toggleLocationAutocompleteHidden = this.toggleLocationAutocompleteHidden.bind(this);
-    // Do I need this?
-    this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
+    // To detect change in location input
     this.onChangeLocationInput = this.onChangeLocationInput.bind(this);
+    // To detect changed in the autocomplete
+    this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
+    // To detect when the user presses enter
+    this.onKeyDownSearchInput = this.onKeyDownSearchInput.bind(this);
+    // To detect when the search button is clicked
     this.onClickSearchButton = this.onClickSearchButton.bind(this);
   }
 
   componentDidMount() {
     // Sets up Google Autocomplete
-    const locationInput = document.getElementById('location-input');
+    const locationInputElement = document.getElementById('location-input');
     const options = {
       types: ['(cities)'],
       componentRestrictions: {
         country: 'us',
       },
     };
-    const autocomplete = new google.maps.places.Autocomplete(locationInput, options);
-    // What's the point of this?
-    // google.maps.event.addListener(autocomplete, 'place_changed', this.handlePlaceChanged);
+
+    const autocomplete = new google.maps.places.Autocomplete(locationInputElement, options);
+    google.maps.event.addListener(autocomplete, 'place_changed', this.handlePlaceChanged);
+    // google.maps.event.addDomListener(autocomplete, 'keydown', function(e) { 
+    //   if (e.keyCode == 13) { 
+    //       e.preventDefault(); 
+    //   }
+    // }); 
   }
 
-  onChangeSearchInput() {
+  onChangeSearchInput(event) {
     const {
       dispatch,
     } = this.props;
 
-    const keyword = this.refs.searchInput.value;
+    const keyword = event.target.value;
     dispatch(searchActions.setKeyword(keyword));
+  }
+
+  onChangeLocationInput(event) {
+    const {
+      dispatch,
+    } = this.props;
+
+    const location = event.target.value;
+    dispatch(searchActions.setLocation(location));
+  }
+
+  handlePlaceChanged() {
+    const {
+      dispatch,
+    } = this.props;
+
+    const location = document.getElementById('location-input').value;
+    dispatch(searchActions.setLocation(location));
   }
 
   onKeyDownSearchInput(event) {
@@ -71,9 +93,9 @@ export class HomeView extends React.Component {
     } = this.props;
 
     if (event.keyCode === 13) {
-      if (!this.state.locationAutocompleteHidden) {
-        this.toggleLocationAutocompleteHidden();
-      } else if (search.keyword !== '' && search.location !== '') {
+      event.preventDefault();
+
+      if (search.keyword !== '' && search.location !== '') {
         console.log('Going to product list page');
         // Transition to next page!
         // this.transitionTo('productSearchResults', {
@@ -85,31 +107,6 @@ export class HomeView extends React.Component {
         console.log('Missing keyword or location');
       }
     }
-  }
-
-  // Do I need this?
-  handlePlaceChanged() {
-    const {
-      dispatch,
-    } = this.props;
-
-    if (!this.state.locationAutocompleteHidden) {
-      this.toggleLocationAutocompleteHidden();
-    }
-    const location = this.refs.locationInput.value;
-    dispatch(searchActions.setLocation(location));
-  }
-
-  onChangeLocationInput() {
-    const {
-      dispatch,
-    } = this.props;
-
-    if (this.state.locationAutocompleteHidden) {
-      this.toggleLocationAutocompleteHidden();
-    }
-    const location = this.refs.locationInput.value;
-    dispatch(searchActions.setLocation(location));
   }
 
   onClickSearchButton() {
@@ -131,12 +128,6 @@ export class HomeView extends React.Component {
     }
   }
 
-  toggleLocationAutocompleteHidden() {
-    this.setState({
-      locationAutocompleteHidden: !this.state.locationAutocompleteHidden,
-    });
-  }
-
   render() {
     const {
       search,
@@ -145,7 +136,12 @@ export class HomeView extends React.Component {
     return (
       <div className="home-view">
         <Header />
-        <Hero />
+        <Hero 
+          onChangeSearchInput={this.onChangeSearchInput}
+          onChangeLocationInput={this.onChangeLocationInput}
+          onKeyDownSearchInput={this.onKeyDownSearchInput}
+          onClickSearchButton={this.onClickSearchButton}
+        />
         <About />
         <Footer />
       </div>

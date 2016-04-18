@@ -16,10 +16,15 @@ export class Footer extends React.Component {
   render() {
     return (
       <div className="home-footer">
-        <div>
-          Footer
+        <div className="footer-links">
+          <a href="/">Pricing</a>
+          <a href="/">Blog</a>
+          <a href="/">Integration</a>
         </div>
-        <div>
+        <div className="footer-question">
+          Questions? We'd love to hear from you! <a href="mailto:questions@findinstore.co">questions@findinstore.co</a>
+        </div>
+        <div className="footer-incorporated">
           © Instore
         </div>
       </div>

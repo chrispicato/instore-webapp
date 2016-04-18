@@ -24,16 +24,17 @@
   float: right;
 }
 
-.header-item-button {
+.header-item {
   color: white;
+  cursor: pointer;
 }
 
-.company-name-button {
-
+.icon-button {
+  color: white;
+  text-decoration: none;
 }
 
 .log-in-button {
-
 }
 
 .connect-inventory-button {
@@ -173,6 +174,33 @@
 
 
 .home-footer {
+  background-color: #3E4348;
+  color: white;
   padding: 50px 0;
   text-align: center;
+}
+
+.footer-links {
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  color: white;
+  font-weight: 600;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.footer-question {
+  margin-bottom: 15px;
+}
+
+.footer-question a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-incorporated {
+  color: #82888A;
 }
