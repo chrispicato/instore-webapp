@@ -17,17 +17,17 @@ export class Header extends React.Component {
     return (
       <div className="home-header">
         <div className="header-item pull-left">
-          <a className="icon-button" href="/">InStore</a>
+          <Link className="icon-button" to={'/'}>InStore</Link>
         </div>
         <div className="header-item pull-right">
-          <div className="log-in-button">
+          <Link className="log-in-button" to={'/'}>
             Log In
-          </div>
+          </Link>
         </div>
         <div className="header-item pull-right">
-          <div className="connect-inventory-button">
+          <Link className="connect-inventory-button" to={'/'}>
             Connect Your Inventory
-          </div>
+          </Link>
         </div>
       </div>
     );

@@ -21,7 +21,7 @@ export class Hero extends React.Component {
       onChangeLocationInput,
       onClickSearchButton,
     } = this.props;
-    
+
     return (
       <div className="home-hero">
         <div className="hero-background">
@@ -41,23 +41,23 @@ export class Hero extends React.Component {
           <div className="hero-footer">
             <div className="hero-searchbar">
               <form className="search-form">
-                <input 
-                  className="search-item-input" 
+                <input
+                  className="search-item-input"
                   type="text"
                   placeholder="What are you looking to buy?"
                   onChange={onChangeSearchInput}
                   onKeyDown={onKeyDownSearchInput}
                 />
-                <input 
+                <input
                   id="location-input"
-                  className="search-location-input" 
+                  className="search-location-input"
                   type="text"
                   placeholder="Where are you at?"
-                  onChange={onChangeLocationInput} 
-                  onBlur={onChangeLocationInput} 
+                  onChange={onChangeLocationInput}
+                  onBlur={onChangeLocationInput}
                   onKeyDown={onKeyDownSearchInput}
                 />
-                <button 
+                <button
                   className="search-button"
                   onClick={onClickSearchButton}
                 >

@@ -52,11 +52,6 @@ export class HomeView extends React.Component {
 
     const autocomplete = new google.maps.places.Autocomplete(locationInputElement, options);
     google.maps.event.addListener(autocomplete, 'place_changed', this.handlePlaceChanged);
-    // google.maps.event.addDomListener(autocomplete, 'keydown', function(e) { 
-    //   if (e.keyCode == 13) { 
-    //       e.preventDefault(); 
-    //   }
-    // }); 
   }
 
   onChangeSearchInput(event) {

@@ -9,12 +9,16 @@ import { Route, IndexRoute, Redirect } from 'react-router';
 import CoreLayout from 'layouts/CoreLayout/CoreLayout';
 // import HomeView from 'components/HomeView/HomeView';
 import HomeView from 'components/NewerHomeView/HomeView';
+import ProductSearchResultView from 'components/ProductSearchResultView/ProductSearchResultView';
+// import ProductDetailView from 'components/ProductDetailView/ProductDetailView';
 import NotFoundView from 'components/NotFoundView/NotFoundView';
 
 // export default (store) => (
 export default () => (
   <Route path="/" component={CoreLayout}>
     <IndexRoute component={HomeView} />
+    <Route path="/product-search-result/:keyword/:location" component={ProductSearchResultView} />
+    <Route path="/product-detail/:productId" component={ProductDetailView}
     <Route path="/404" component={NotFoundView} />
     <Redirect from="*" to="/404" />
   </Route>
