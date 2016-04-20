@@ -2,12 +2,6 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-function mapStateToProps(state) {
-  return {
-    // Nothing needs to be mapped
-  };
-}
-
 export class Hero extends React.Component {
   static propTypes = {
     // No prop types required
@@ -15,10 +9,13 @@ export class Hero extends React.Component {
 
   render() {
     const {
+      keyword,
+      location,
       onChangeSearchInput,
-      onKeyDownSearchInput,
-      handlePlaceChanged,
       onChangeLocationInput,
+      handlePlaceChanged,
+      onKeyDownSearchInput,
+      onKeyDownLocationInput,
       onClickSearchButton,
     } = this.props;
 
@@ -45,21 +42,22 @@ export class Hero extends React.Component {
                   className="search-item-input"
                   type="text"
                   placeholder="What are you looking to buy?"
-                  onChange={onChangeSearchInput}
-                  onKeyDown={onKeyDownSearchInput}
+                  value={ keyword }
+                  onChange={ onChangeSearchInput }
+                  onKeyDown={ onKeyDownSearchInput }
                 />
                 <input
                   id="location-input"
                   className="search-location-input"
                   type="text"
                   placeholder="Where are you at?"
-                  onChange={onChangeLocationInput}
-                  onBlur={onChangeLocationInput}
-                  onKeyDown={onKeyDownSearchInput}
+                  value={ location }
+                  onChange={ onChangeLocationInput }
+                  onKeyDown={ onKeyDownLocationInput }
                 />
                 <button
                   className="search-button"
-                  onClick={onClickSearchButton}
+                  onClick={ onClickSearchButton }
                 >
                   Search
                 </button>
@@ -72,4 +70,4 @@ export class Hero extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Hero);
+export default Hero;

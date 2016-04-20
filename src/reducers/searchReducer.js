@@ -8,6 +8,7 @@ function initialSearchState() {
   return {
     keyword: '',
     location: '',
+    changingLocation: false,
   };
 }
 
@@ -20,6 +21,10 @@ export default function searchReducer(state = initialSearchState(), action) {
     case searchConstants.SET_LOCATION:
       return Object.assign({}, state, {
         location: action.payload,
+      });
+    case searchConstants.SET_CHANGING_LOCATION:
+      return Object.assign({}, state, {
+        changingLocation: action.payload,
       });
     default:
       return state;

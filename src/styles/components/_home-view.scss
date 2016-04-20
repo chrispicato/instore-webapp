@@ -35,13 +35,17 @@
 }
 
 .log-in-button {
+  color: white;
+  text-decoration: none;
 }
 
 .connect-inventory-button {
   border: 1px solid white;
   border-radius: 5px;
+  color: white;
   display: inline;
   padding: 4px 12px;
+  text-decoration: none;
 }
 
 .connect-inventory-button:hover {

@@ -1,15 +1,10 @@
 TODO.md
 
 * HomeView
-  - Fix the css
-      - Optimize the css
-      - Fix positioning of image
-  - Split HomeView into different components
-    - Navbar
-      - Don't make it sticky for now, kiss
-    - Header refer to themes for help
-    - Overview
-    - Values (3 columns about what we provide?)
+- Figure out how to read in location input change before pushing to next page
+- Make home view look a little better "about page and footer"
+- Build out product search result view
+
 
 * ProductSearchResultView [4/29]
 

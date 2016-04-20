@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { push } from 'react-router-redux';
 
 import searchActions from '../../actions/searchActions';
 import Header from './Header';
@@ -34,8 +35,10 @@ export class HomeView extends React.Component {
     this.onChangeLocationInput = this.onChangeLocationInput.bind(this);
     // To detect changed in the autocomplete
     this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
-    // To detect when the user presses enter
+    // To detect when the user presses enter in the search input
     this.onKeyDownSearchInput = this.onKeyDownSearchInput.bind(this);
+    // To detect when the user presses enter in the location input
+    this.onKeyDownLocationInput = this.onKeyDownLocationInput.bind(this);
     // To detect when the search button is clicked
     this.onClickSearchButton = this.onClickSearchButton.bind(this);
   }
@@ -78,7 +81,9 @@ export class HomeView extends React.Component {
     } = this.props;
 
     const location = document.getElementById('location-input').value;
+
     dispatch(searchActions.setLocation(location));
+    dispatch(searchActions.setChangingLocation(false));
   }
 
   onKeyDownSearchInput(event) {
@@ -91,33 +96,59 @@ export class HomeView extends React.Component {
       event.preventDefault();
 
       if (search.keyword !== '' && search.location !== '') {
-        console.log('Going to product list page');
-        // Transition to next page!
-        // this.transitionTo('productSearchResults', {
-        //   keyword: this.state.keyword.replace(/ /g, '+'),
-        //   location: this.state.location.replace(/ /g, '+')
-        // });
-        // this.transitionTo('/search/query=' + this.state.keyword.replace(/ /g, '+') + '&location=' + this.state.location.replace(/ /g, '+'));
+        console.log('Enter key hit in search input');
+        console.log('Keyword:', search.keyword);
+        console.log('Location:', search.location);
+        // dispatch(push('/product-search-result'));
+        // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
       } else {
         console.log('Missing keyword or location');
       }
     }
   }
 
-  onClickSearchButton() {
+  onKeyDownLocationInput(event) {
     const {
       search,
       dispatch,
     } = this.props;
 
+    
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      
+      // const pacContainer = document.querySelector('.pac-container');
+
+      // if (pacContainer.style.display === 'none') {
+        if (search.keyword !== '' && search.location !== '' && !search.changingLocation) {
+          console.log('Enter key hit in location input');
+          console.log('Keyword:', search.keyword);
+          console.log('Location:', search.location);
+          // dispatch(push('/product-search-result'));
+          // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
+        } else {
+          console.log('Missing keyword or location');
+        }
+      // }
+    } else {
+      dispatch(searchActions.setChangingLocation(true));
+    }
+  }
+
+  onClickSearchButton(event) {
+    const {
+      search,
+      dispatch,
+    } = this.props;
+
+    event.preventDefault();
+
     if (search.keyword !== '' && search.location !== '') {
-      console.log('Going to product list page');
-      // this.transitionTo('productSearchResults', {
-      //   keyword: this.state.keyword.replace(/ /g, '+'),
-      //   location: this.state.location.replace(/ /g, '+'),
-      // });
-      // Transition to next page
-      // this.transitionTo('/search/query=' + this.state.keyword.replace(/ /g, '+') + '&location=' + this.state.location.replace(/ /g, '+'));
+      console.log('Search button clicked');
+      console.log('Keyword', search.keyword);
+      console.log('Location', search.location);
+      // dispatch(push('/product-search-result'));
+      // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
     } else {
       console.log('Missing keyword or location');
     }
@@ -132,8 +163,11 @@ export class HomeView extends React.Component {
       <div className="home-view">
         <Header />
         <Hero 
+          keyword={ search.keyword }
+          location={ search.location }
           onChangeSearchInput={this.onChangeSearchInput}
           onChangeLocationInput={this.onChangeLocationInput}
+          onKeyDownLocationInput={this.onKeyDownLocationInput}
           onKeyDownSearchInput={this.onKeyDownSearchInput}
           onClickSearchButton={this.onClickSearchButton}
         />
