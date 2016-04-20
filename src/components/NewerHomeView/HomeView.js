@@ -117,19 +117,17 @@ export class HomeView extends React.Component {
     if (event.keyCode === 13) {
       event.preventDefault();
       
-      // const pacContainer = document.querySelector('.pac-container');
 
-      // if (pacContainer.style.display === 'none') {
-        if (search.keyword !== '' && search.location !== '' && !search.changingLocation) {
-          console.log('Enter key hit in location input');
-          console.log('Keyword:', search.keyword);
-          console.log('Location:', search.location);
-          // dispatch(push('/product-search-result'));
-          // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
-        } else {
-          console.log('Missing keyword or location');
-        }
-      // }
+      if (search.keyword !== '' && search.location !== '' && !search.changingLocation) {
+        console.log('Enter key hit in location input');
+        console.log('Keyword:', search.keyword);
+        console.log('Location:', search.location);
+        // dispatch(push('/product-search-result'));
+        // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
+      } else {
+        console.log('Missing keyword or location');
+      }
+      
     } else {
       dispatch(searchActions.setChangingLocation(true));
     }
