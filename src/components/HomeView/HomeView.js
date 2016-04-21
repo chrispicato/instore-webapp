@@ -100,7 +100,7 @@ export class HomeView extends React.Component {
         console.log('Keyword:', search.keyword);
         console.log('Location:', search.location);
         // dispatch(push('/product-search-result'));
-        // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
+        dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
       } else {
         console.log('Missing keyword or location');
       }
@@ -123,7 +123,7 @@ export class HomeView extends React.Component {
         console.log('Keyword:', search.keyword);
         console.log('Location:', search.location);
         // dispatch(push('/product-search-result'));
-        // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
+        dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
       } else {
         console.log('Missing keyword or location');
       }
@@ -146,7 +146,7 @@ export class HomeView extends React.Component {
       console.log('Keyword', search.keyword);
       console.log('Location', search.location);
       // dispatch(push('/product-search-result'));
-      // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
+      dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
     } else {
       console.log('Missing keyword or location');
     }
