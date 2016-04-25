@@ -16,10 +16,11 @@ import NotFoundView from 'components/NotFoundView/NotFoundView';
 export default () => (
   <Route path="/" component={CoreLayout}>
     <IndexRoute component={HomeView} />
-    <Route path="/product-search-result?keyword=:keyword&location=:location" component={ProductSearchResultView} />
+    <Route path="/product-search-result" component={ProductSearchResultView} />
     <Route path="/404" component={NotFoundView} />
     <Redirect from="*" to="/404" />
   </Route>
 );
+    // <Route path="/product-search-result?keyword=:keyword&location=:location" component={ProductSearchResultView} />
     // <Route path="/product-search-result" component={ProductSearchResultView} />
     // <Route path="/product-detail?productId=:productId" component={ProductDetailView} />

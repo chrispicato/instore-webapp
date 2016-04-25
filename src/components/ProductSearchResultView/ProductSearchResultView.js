@@ -21,7 +21,8 @@ export class ProductSearchResultView extends React.Component {
     } = this.props;
     return (
       <div className="product-search-result-view">
-
+        <div className="search-header">
+        </div>
         Product Search Result!
         {search.keyword}
         {search.location}
