@@ -5,7 +5,65 @@ import { Link } from 'react-router';
 export class Hero extends React.Component {
   static propTypes = {
     // No prop types required
+    keyword: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    onChangeSearchInput: PropTypes.func.isRequired,
+    onChangeLocationInput: PropTypes.func.isRequired,
+    onKeyDownCheckForEnter: PropTypes.func.isRequired,
+    onClickSearchButton: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+
+    // To detect changed in the autocomplete
+    this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
+    // To detect if the dropdown is open when user presses enter
+    this.onKeyDownLocationInput = this.onKeyDownLocationInput.bind(this);
+
+    this.state = {
+      changingLocation: false,
+    };
+  }
+
+  componentDidMount() {
+    // Sets up Google Autocomplete
+    const locationInputElement = document.getElementById('location-input');
+    const options = {
+      types: ['(cities)'],
+      componentRestrictions: {
+        country: 'us',
+      },
+    };
+    const autocomplete = new google.maps.places.Autocomplete(locationInputElement, options);
+    google.maps.event.addListener(autocomplete, 'place_changed', this.handlePlaceChanged);
+  }
+
+  handlePlaceChanged() {
+    const {
+      onChangeLocationInput,
+    } = this.props;
+
+    onChangeLocationInput(undefined, true);
+
+    this.setState({
+      changingLocation: false,
+    });
+  }
+
+  onKeyDownLocationInput(event) {
+    const {
+      onKeyDownCheckForEnter,
+    } = this.props;
+
+    if (event.keyCode === 13 && !this.state.changingLocation) {
+      onKeyDownCheckForEnter(event);
+    } else {
+      this.setState({
+        changingLocation: true,
+      });
+    }
+  }
 
   render() {
     const {
@@ -13,9 +71,7 @@ export class Hero extends React.Component {
       location,
       onChangeSearchInput,
       onChangeLocationInput,
-      handlePlaceChanged,
-      onKeyDownSearchInput,
-      onKeyDownLocationInput,
+      onKeyDownCheckForEnter,
       onClickSearchButton,
     } = this.props;
 
@@ -44,7 +100,7 @@ export class Hero extends React.Component {
                   placeholder="What are you looking to buy?"
                   value={ keyword }
                   onChange={ onChangeSearchInput }
-                  onKeyDown={ onKeyDownSearchInput }
+                  onKeyDown={ onKeyDownCheckForEnter }
                 />
                 <input
                   id="location-input"
@@ -53,14 +109,14 @@ export class Hero extends React.Component {
                   placeholder="Where are you at?"
                   value={ location }
                   onChange={ onChangeLocationInput }
-                  onKeyDown={ onKeyDownLocationInput }
+                  onKeyDown={ this.onKeyDownLocationInput }
                 />
-                <button
+                <input
                   className="search-button"
+                  type="button"
+                  value="Search"
                   onClick={ onClickSearchButton }
-                >
-                  Search
-                </button>
+                />
               </form>
             </div>
           </div>

@@ -17,17 +17,9 @@ function setLocation(location = '') {
   };
 }
 
-function setChangingLocation(changingLocation = false) {
-  return {
-    type: searchConstants.SET_CHANGING_LOCATION,
-    payload: changingLocation,
-  }
-}
-
 const searchActions = {
   setKeyword,
   setLocation,
-  setChangingLocation,
 };
 
 export default searchActions;

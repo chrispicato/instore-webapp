@@ -22,10 +22,6 @@ export default function searchReducer(state = initialSearchState(), action) {
       return Object.assign({}, state, {
         location: action.payload,
       });
-    case searchConstants.SET_CHANGING_LOCATION:
-      return Object.assign({}, state, {
-        changingLocation: action.payload,
-      });
     default:
       return state;
   }
