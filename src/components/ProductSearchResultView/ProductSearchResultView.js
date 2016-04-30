@@ -12,7 +12,8 @@ function mapStateToProps(state) {
 
 export class ProductSearchResultView extends React.Component {
   static propTypes = {
-    // No prop types required
+    search: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   };
 
   render() {

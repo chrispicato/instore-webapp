@@ -119,7 +119,6 @@ export class HomeView extends React.Component {
     
     if (event.keyCode === 13) {
       event.preventDefault();
-      
 
       if (search.keyword !== '' && search.location !== '' && !search.changingLocation) {
         console.log('Enter key hit in location input');
