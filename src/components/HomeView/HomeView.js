@@ -27,6 +27,10 @@ export class HomeView extends React.Component {
     dispatch: PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -48,15 +52,18 @@ export class HomeView extends React.Component {
       dispatch,
     } = this.props;
 
+    const {
+      router,
+    } = this.context;
+
     if (search.keyword !== '' && search.location !== '') {
-      console.log('Enter key hit in search input');
-      console.log('Keyword:', search.keyword);
-      console.log('Location:', search.location);
-      // dispatch(push(`/product-search-result?keyword=${search.keyword}&location=${search.location}`));
-      dispatch(push(`/product-search-result`, {
-        keyword: search.keyword,
-        location: search.location,
-      }));
+      router.push({
+        pathname: '/product-search-result', 
+        query: {
+          keyword: search.keyword,
+          location: search.location,
+        },
+      });
     } else {
       console.log('Missing keyword or location');
     }

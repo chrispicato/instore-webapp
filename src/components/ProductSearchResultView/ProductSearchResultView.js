@@ -16,10 +16,19 @@ export class ProductSearchResultView extends React.Component {
     dispatch: PropTypes.func.isRequired,
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  };
+
   render() {
     const {
       search,
     } = this.props;
+
+    const {
+      router,
+    } = this.context;
+    
     return (
       <div className="product-search-result-view">
         <div className="search-header">
