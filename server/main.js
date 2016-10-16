@@ -42,10 +42,6 @@ if (process.env.NODE_ENV !== 'production') {
 // main server
 app.use(express.static(path.join(__dirname, '/../dist')));
 
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/../client/index.html'));
 });

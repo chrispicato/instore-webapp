@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import { autoRehydrate } from 'redux-persist';
 
-import rootReducer from './components/reducers/indexReducer';
+import rootReducer from './reducers/indexReducer';
 
 const store = createStore(rootReducer, compose(
     applyMiddleware(thunk),
