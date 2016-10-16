@@ -1,60 +1,54 @@
-import Koa from 'koa';
-import convert from 'koa-convert';
-import webpack from 'webpack';
-import webpackConfig from '../build/webpack.config';
-import historyApiFallback from 'koa-connect-history-api-fallback';
-import serve from 'koa-static';
-import koaProxyMiddleware from 'koa-proxy';
-import _debug from 'debug';
-import config from '../config';
-import webpackDevMiddleware from './middleware/webpack-dev';
-import webpackHMRMiddleware from './middleware/webpack-hmr';
+const fs = require('fs');
+const express = require('express');
+const config = require('../config/config.js');
+const path = require('path');
+const rp = require('request-promise');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackconfig = require('../webpack.config.js');
 
-const debug = _debug('app:server');
-const paths = config.utils_paths;
-const app = new Koa();
+const app = express();
 
-// This rewrites all routes requests to the root /index.html file
-// (ignoring file requests). If you want to implement isomorphic
-// rendering, you'll want to remove this middleware.
-app.use(convert(historyApiFallback({
-  verbose: false,
-})));
+const bodyParser = require('body-parser');
 
-// ------------------------------------
-// Apply Webpack HMR Middleware
-// ------------------------------------
-if (config.env === 'development') {
-  const compiler = webpack(webpackConfig);
+const jsonParser = bodyParser.json();
+app.use(jsonParser);
 
-  // Enable webpack-dev and webpack-hot middleware
-  const { publicPath } = webpackConfig.output;
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Loading hot` reloader');
+  const webpackcompiler = webpack(webpackconfig);
 
-  if (config.proxy && config.proxy.enabled) {
-    const options = config.proxy.options;
-    app.use(convert(koaProxyMiddleware(options)));
-  }
+  // enable webpack middleware for hot-reloads in development
+  const useWebpackMiddleware = (expressApp) => {
+    expressApp.use(webpackDevMiddleware(webpackcompiler, {
+      publicPath: '/',
+      stats: {
+        colors: true,
+        chunks: false, // this reduces the amount of stuff I see in my terminal;
+        // configure to your needs
+        'errors-only': true,
+      },
+    }));
 
-  app.use(webpackDevMiddleware(compiler, publicPath));
-  app.use(webpackHMRMiddleware(compiler));
+    expressApp.use(webpackHotMiddleware(webpackcompiler, {}));
 
-  // Serve static assets from ~/src/static since Webpack is unaware of
-  // these files. This middleware doesn't need to be enabled outside
-  // of development since this directory will be copied into ~/dist
-  // when the application is compiled.
-  app.use(convert(serve(paths.client('static'))));
-} else {
-  debug(
-    'Server is being run outside of live development mode. This starter kit ' +
-    'does not provide any production-ready server functionality. To learn ' +
-    'more about deployment strategies, check out the "deployment" section ' +
-    'in the README.'
-  );
+    return expressApp;
+  };
 
-  // Serving ~/dist by default. Ideally these files should be served by
-  // the web server and not the app server, but this helps to demo the
-  // server in production.
-  app.use(convert(serve(paths.base(config.dir_dist))));
+  useWebpackMiddleware(app);
 }
 
-export default app;
+// main server
+app.use(express.static(path.join(__dirname, '/../dist')));
+
+// app.get('/', (req, res) => {
+//   res.render('index');
+// });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/index.html'));
+});
+
+app.listen(config.WEB_SERVER_PORT);
+console.log(`Server listening on port: ${config.WEB_SERVER_PORT}`);
