@@ -1,12 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+
 const APP_DIR = path.resolve(__dirname, 'client');
 
 module.exports = {
   devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client', 'webpack/hot/dev-server',
-    APP_DIR + '/index.jsx',
+    `${APP_DIR}/index.jsx`,
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -16,7 +17,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': '"development"'
+        NODE_ENV: 'development',
       },
     }),
   ],
@@ -32,7 +33,11 @@ module.exports = {
         include: APP_DIR,
       },
       {
-        test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' // inline base64 URLs for <=8k images, direct URLs for the rest
+        test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css!less',
       },
     ],
   },
