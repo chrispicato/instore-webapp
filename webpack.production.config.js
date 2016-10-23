@@ -17,7 +17,7 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    // new ExtractTextPlugin('main.css'),
+    new ExtractTextPlugin('main.css'),
     // new webpack.DefinePlugin({
     //   'process.env': {
     //     NODE_ENV: 'development',
@@ -28,7 +28,7 @@ module.exports = {
     loaders: [
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader',
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader'),
       },
       {
         test: /\.json$/,

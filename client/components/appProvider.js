@@ -3,7 +3,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import store, { history } from '../store';
 import { persistStore, autoRehydrate } from 'redux-persist'
-import Routes from '../routes.jsx';
+import Routes from '../routes.js';
+import styles from '../styles/main.less';
 
 export default class AppProvider extends Component {
 
